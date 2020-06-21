@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>弹窗练习</title>
+		<script src="vue.js"></script>
+		<style>
+			.hide{
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,0.5);
+			}
+			.dialog{
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+				width: 500px;
+				height: 300px;
+				text-align: center;
+				line-height: 300px;
+				background-color: white;
+			}
+			.dialog button{
+				position: absolute;
+				top:0;
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<button @click="handleClick">点击按键</button>
+			<hide v-if = 'isShow' @close = 'closeClick'></hide>
+		</div>
+		<template id="hide">
+			<div class="hide">
+				<div class="dialog">
+					<button @click="handlClick">关闭弹窗</button>
+					<h1>弹窗练习</h1>
+				</div>
+			</div>
+		</template>
+		<script type="text/javascript">
+			let hide = {
+				template:'#hide',
+				methods:{
+					handlClick(){
+						this.$emit('close') //子向父
+					}
+				}
+			}
+			let vm = new Vue({
+				el:'#app',
+				data:{
+					isShow:false
+				},
+				methods:{
+					handleClick(){
+						this.isShow = true
+					},
+					closeClick(){
+						this.isShow = false
+					}
+				},
+				components:{
+					hide
+				}
+			})
+		</script>
+	</body>
+</html>
